@@ -1,0 +1,169 @@
+*ddu-source-taskwarrior.txt*	taskwarrior source for ddu.vim
+
+Author: shutils
+License: MIT license
+
+CONTENTS                                     *ddu-source-taskwarrior-contents*
+
+Introduction		|ddu-source-taskwarrior-introduction|
+Install			|ddu-source-taskwarrior-install|
+Examples		|ddu-source-taskwarrior-examples|
+Params			|ddu-source-taskwarrior-params|
+
+
+==============================================================================
+INTRODUCTION                             *ddu-source-taskwarrior-introduction*
+
+This source collects your task from taskwarrior.
+
+
+==============================================================================
+INSTALL                                       *ddu-source-taskwarrior-install*
+
+Please install both "ddu.vim" and "denops.vim".
+
+https://github.com/Shougo/ddu.vim
+https://github.com/vim-denops/denops.vim
+
+NOTE:Since there are multiple actions, it is recommended to use the
+following plugins.
+https://github.com/Shougo/ddu-source-action
+
+
+==============================================================================
+EXAMPLES                                     *ddu-source-taskwarrior-examples*
+>
+	call ddu#start(#{ sources: [#{ name: 'taskwarrior' }] })
+	
+	call ddu#custom#patch_global('sourceParams', #{
+	      \   taskwarrior: #{
+	      \     cmdName: "taskw",
+	      \     filter: ["status:completed", "or", "status:pending"],
+	      \   },
+	      \ })
+
+	call ddu#custom#patch_global('sourceOptions', #{
+	      \   taskwarrior: #{
+	      \     converters: ['converter_taskwarrior'],
+	      \   },
+	      \ })
+
+	call ddu#custom#patch_global('kindOptions', #{
+	      \   taskwarrior: #{
+	      \     defaultAction: done,
+	      \   },
+	      \ })
+<
+
+==============================================================================
+PARAMS                                         *ddu-source-taskwarrior-params*
+
+				       *ddu-source-taskwarrior-params-cmdName*
+cmdName	(string)	optional
+	Alias for the taskwarrior command. It can be used when conflicting
+	with other task commands.
+
+filter	(string[])	optional
+	Sets the args to pass to taskwarrior's filter.
+	See https://taskwarrior.org/docs/filter/
+
+
+==============================================================================
+ACTIONS                                         *ddu-kind-taskwarrior-actions*
+
+					     *ddu-kind-taskwarrior-action-add*
+add
+	Add a new task.
+>
+	" Same as below command
+	$ task add {task}
+<
+
+					   *ddu-kind-taskwarrior-action-append*
+append
+	Add a string to the selected task.
+>
+	" Same as below command
+	$ task {items id or uuid} append {text}
+<
+
+					   *ddu-kind-taskwarrior-action-modify*
+modify
+	Edit the selected task.
+	NOTE:
+	If you use this action you need to turn off the taskwarrior confirmation.
+>
+	" Same as below command
+	$ task {items id or uuid} modify {text}
+<
+					   *ddu-kind-taskwarrior-action-delete*
+delete
+	Delete the selected task.
+	NOTE:
+	If you use this action you need to turn off the taskwarrior confirmation.
+>
+	" Same as below command
+	$ task {items id or uuid} delete
+<
+
+					   *ddu-kind-taskwarrior-action-purge*
+purge
+	Permanently delete the selected task.
+	NOTE:
+	If you use this action you need to turn off the taskwarrior confirmation.
+>
+	" Same as below command
+	$ task {items id or uuid} purge
+<
+					    *ddu-kind-taskwarrior-action-done*
+done
+	Mark the selected task as completed.
+>
+	" Same as below command
+	$ task {items id or uuid} done
+<
+
+					*ddu-kind-taskwarrior-action-annotate*
+annotate
+	Add annotation to the selected task.
+>
+	" Same as below command
+	$ task {items id or uuid} annotate {text}
+<
+
+					   *ddu-kind-taskwarrior-action-start*
+start
+	Start the selected task.
+>
+	" Same as below command
+	$ task {items id or uuid} start
+<
+
+					    *ddu-kind-taskwarrior-action-stop*
+stop
+	Stop the selected task.
+>
+	" Same as below command
+	$ task {items id or uuid} stop
+<
+
+				       *ddu-kind-taskwarrior-action-deplicate*
+deplicate
+	Duplicate the selected task.
+>
+	" Same as below command
+	$ task {items id or uuid} deplicate
+<
+
+					    *ddu-kind-taskwarrior-action-undo*
+undo
+	Undo the last operation.
+	NOTE:
+	If you use this action you need to turn off the taskwarrior confirmation.
+>
+	" Same as below command
+	$ task undo
+<
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
