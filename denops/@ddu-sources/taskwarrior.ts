@@ -14,6 +14,7 @@ export type ActionData = {
   description: string;
   status: string;
   cmdName: string;
+  urgency: number;
 };
 
 type Task = {
@@ -21,6 +22,7 @@ type Task = {
   uuid: string;
   description: string;
   status: string;
+  urgency: number;
 };
 
 const getTasks = async (
